@@ -12,48 +12,62 @@ export default function Home() {
     <div className="flex flex-col min-h-screen bg-white font-sans text-slate-900">
 
       {/* 1. HERO SECTION */}
-      <section className="relative w-full pt-20 pb-0 overflow-hidden font-sans">
+      <section className="relative w-full pt-28 pb-0 overflow-hidden font-sans">
 
         {/* Randomized Scattered Product Background Patterns */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-[0.06]">
-          {/* Scattered across the screen with varying sizes, rotations, and positions */}
-          <Package className="absolute top-[10%] left-[5%] w-24 h-24 -rotate-12 text-slate-500" strokeWidth={1} />
-          <ShoppingBag className="absolute top-[25%] left-[20%] w-16 h-16 rotate-6 text-slate-500" strokeWidth={1.5} />
-          <Car className="absolute top-[65%] left-[8%] w-32 h-32 -rotate-6 text-slate-500" strokeWidth={1} />
-          <Monitor className="absolute top-[15%] left-[80%] w-20 h-20 rotate-12 text-slate-500" strokeWidth={1} />
-          <Smartphone className="absolute top-[50%] left-[88%] w-16 h-16 -rotate-12 text-slate-500" strokeWidth={1.5} />
-          <Coffee className="absolute top-[80%] left-[75%] w-24 h-24 rotate-45 text-slate-500" strokeWidth={1} />
-          <Package className="absolute top-[70%] left-[35%] w-20 h-20 rotate-12 text-slate-500" strokeWidth={1} />
-          <Gamepad2 className="absolute top-[5%] left-[45%] w-28 h-28 -rotate-6 text-slate-500" strokeWidth={1} />
-          <Briefcase className="absolute top-[40%] left-[10%] w-20 h-20 rotate-12 text-slate-500" strokeWidth={1} />
-          <Headphones className="absolute top-[35%] left-[70%] w-24 h-24 -rotate-12 text-slate-500" strokeWidth={1} />
-          <Plug className="absolute top-[85%] left-[20%] w-16 h-16 rotate-45 text-slate-500" strokeWidth={1.5} />
-          <Printer className="absolute top-[60%] left-[60%] w-28 h-28 -rotate-6 text-slate-500" strokeWidth={1} />
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-[0.04]">
+          {/* Sparse, well-spaced scattered background elements */}
+          <Package className="absolute top-[12%] left-[8%] w-24 h-24 -rotate-12 text-slate-900" strokeWidth={1} />
+          <Car className="absolute top-[55%] left-[12%] w-32 h-32 rotate-6 text-slate-900" strokeWidth={1} />
+          <Gamepad2 className="absolute top-[15%] left-[48%] w-20 h-20 -rotate-6 text-slate-900" strokeWidth={1.5} />
+          <Coffee className="absolute top-[75%] left-[38%] w-24 h-24 rotate-12 text-slate-900" strokeWidth={1} />
+          <Monitor className="absolute top-[20%] left-[82%] w-20 h-20 rotate-6 text-slate-900" strokeWidth={1.5} />
+          <Headphones className="absolute top-[60%] left-[78%] w-28 h-28 -rotate-12 text-slate-900" strokeWidth={1} />
         </div>
 
-        {/* Centered soft glowing gradient background */}
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] max-w-[90vw] h-[500px] rounded-[100%] bg-gradient-to-r from-[#fde0b5] via-[#e2f8dc] to-[#c6f6d5] blur-[100px] md:blur-[140px] pointer-events-none opacity-80 z-0"></div>
+        {/* Premium ambient glowing background orbs */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] max-w-[100vw] h-[600px] rounded-[100%] bg-gradient-to-br from-[#c6f6d5]/40 via-[#e2f8dc]/50 to-[#fde0b5]/40 blur-[120px] pointer-events-none opacity-90 z-0"></div>
+        <div className="absolute top-20 right-0 w-[500px] h-[500px] rounded-full bg-gradient-to-bl from-[#61c554]/10 to-transparent blur-[100px] pointer-events-none z-0"></div>
 
-        <div className="container mx-auto px-4 text-center max-w-4xl relative z-10 pt-10">
-          <h1 className="text-[3.5rem] md:text-[5.5rem] leading-[1.05] font-medium tracking-tight mb-6">
-            Monitor inventory,<br />protect your business
+        <div className="container mx-auto px-4 text-center max-w-5xl relative z-10 pt-4">
+          
+          {/* Announcement Pill */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/60 border border-[#61c554]/20 shadow-sm backdrop-blur-md mb-8 text-sm font-medium text-slate-700 hover:bg-white/80 transition-colors cursor-default">
+            <span className="flex h-2 w-2 rounded-full bg-[#61c554]"></span>
+            Now monitoring over 10,000+ official Health Canada recalls
+          </div>
+
+          {/* Headline */}
+          <h1 className="text-[3.25rem] md:text-[5rem] leading-[1.05] font-bold tracking-tighter mb-6">
+            <span className="bg-clip-text text-transparent bg-gradient-to-b from-slate-900 via-slate-800 to-slate-600 pr-2">
+              Monitor inventory,
+            </span>
+            <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 pr-2">
+              protect your business
+            </span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+          
+          {/* Subheadline */}
+          <p className="text-xl md:text-[1.35rem] text-slate-600 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
             Take control of your product compliance by automatically diversifying your safety checks against official Government of Canada data.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
-            <Button asChild variant="outline" className="h-14 px-10 text-lg rounded-full border-slate-300 text-slate-700 font-semibold hover:bg-slate-50 w-full sm:w-auto">
-              <Link href="/recalls">Browse Database</Link>
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+            <Button asChild className="h-14 px-10 text-lg rounded-full bg-[#61c554] hover:bg-[#4ea843] text-white font-semibold border-none w-full sm:w-auto shadow-[0_8px_30px_rgb(97,197,84,0.3)] transition-all hover:scale-[1.02]">
+              <Link href="/signup">Start Monitoring Now</Link>
             </Button>
-            <Button asChild className="h-14 px-10 text-lg rounded-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold border-none w-full sm:w-auto">
-              <Link href="/signup">Start Monitoring</Link>
+            <Button asChild variant="outline" className="h-14 px-10 text-lg rounded-full bg-white/80 backdrop-blur-md border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 w-full sm:w-auto hover:scale-[1.02] transition-all">
+              <Link href="/recalls">Browse Database</Link>
             </Button>
           </div>
         </div>
 
         {/* Abstract Line Art Placeholder (Product & Warehouse Theme - Assembly Line) */}
-        <AnimatedAssemblyLine />
+        <div className="-mt-16 relative z-20">
+          <AnimatedAssemblyLine />
+        </div>
       </section>
 
       {/* 2. HOW BUSINESS OWNERS USE IT */}
