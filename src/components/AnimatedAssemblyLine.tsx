@@ -2,62 +2,56 @@
 
 import React, { useEffect, useState } from 'react'
 
+// Premium product silhouettes — more refined, architecturally clean paths
 const PRODUCTS = [
-  // 0: Box 1
+  // Tall slim bottle
   {
-    path: <path d="M30 180V130H80V180 M30 145H80" />,
-    rect: { x: 50, y: 155 }
+    viewPath: <path d="M48 175V108C48 96 42 88 42 78V64H58V78C58 88 52 96 52 108V175Z M44 72H56" />,
+    dot: { cx: 50, cy: 148 },
+    width: 100,
   },
-  // 1: Bottle
+  // Stacked boxes (two)
   {
-    path: <path d="M110 180V100C110 90 120 80 120 70V60H130V70C130 80 140 90 140 100V180Z" />,
-    rect: { x: 120, y: 140 }
+    viewPath: <path d="M20 175V145H80V175Z M28 145V120H72V145Z M20 155H80 M28 132H72" />,
+    dot: { cx: 50, cy: 130 },
+    width: 100,
   },
-  // 2: Stacked Boxes
+  // Wide flat monitor/device
   {
-    path: <path d="M170 180V140H230V180 M180 140V110H220V140" />,
-    rect: { x: 195, y: 120 }
+    viewPath: <path d="M10 160V110H90V160H10Z M10 128H90 M38 175V160 M62 175V160 M28 175H72 M22 120H78" />,
+    dot: { cx: 50, cy: 143 },
+    width: 100,
   },
-  // 3: Tin Can
+  // Jar with lid
   {
-    path: <path d="M270 180V120H320V180 M270 130H320 M270 170H320" />,
-    rect: { x: 290, y: 155 }
+    viewPath: <path d="M30 175V118C30 108 36 102 36 102V92H64V102C64 102 70 108 70 118V175Z M30 112H70 M34 96H66" />,
+    dot: { cx: 50, cy: 148 },
+    width: 100,
   },
-  // 4: Monitor / Tech
+  // Spray / pump bottle
   {
-    path: <path d="M360 160V110H430V160H360Z M385 180V160 M405 180V160 M370 180H420" />,
-    rect: { x: 390, y: 125 }
+    viewPath: <path d="M40 175V108H60V175Z M40 118C40 108 30 102 20 102V96H55V102 M52 96V86H68V96" />,
+    dot: { cx: 50, cy: 148 },
+    width: 88,
   },
-  // 5: Tall Box
+  // Tall box with label lines
   {
-    path: <path d="M470 180V80H520V180 M480 80L495 100L510 80" />,
-    rect: { x: 490, y: 140 }
+    viewPath: <path d="M22 175V90H78V175Z M22 122H78 M32 104H68 M32 134H68 M32 148H68 M32 162H68" />,
+    dot: { cx: 50, cy: 108 },
+    width: 100,
   },
-  // 6: Spray Bottle
+  // Compact cube
   {
-    path: <path d="M560 180V110C560 100 580 90 580 90H560V80H590V90H600V110C600 110 590 130 590 180H560Z" />,
-    rect: { x: 575, y: 150 }
+    viewPath: <path d="M22 175V138H78V175Z M22 155H78 M50 138V175" />,
+    dot: { cx: 50, cy: 158 },
+    width: 100,
   },
-  // 7: Large Box with X
+  // Bag / pouch silhouette
   {
-    path: <path d="M630 180V120H710V180 M630 120L710 180 M630 180L710 120" />,
-    rect: { x: 665, y: 145 }
+    viewPath: <path d="M30 175V130C30 115 35 105 50 100C65 105 70 115 70 130V175Z M38 107C38 100 44 94 50 92C56 94 62 100 62 107 M30 148H70" />,
+    dot: { cx: 50, cy: 162 },
+    width: 100,
   },
-  // 8: Small Stack
-  {
-    path: <path d="M750 180V150H780V180 M750 150V130H770V150 M780 180V160H800V180" />,
-    rect: { x: 760, y: 165 }
-  },
-  // 9: Jar
-  {
-    path: <path d="M840 180V120C840 110 850 100 850 100V90H890V100C890 100 900 110 900 120V180Z M840 110H900" />,
-    rect: { x: 865, y: 135 }
-  },
-  // 10: Box 2
-  {
-    path: <path d="M930 180V140H980V180 M930 150H980" />,
-    rect: { x: 950, y: 155 }
-  }
 ]
 
 export default function AnimatedAssemblyLine() {
@@ -66,55 +60,125 @@ export default function AnimatedAssemblyLine() {
   useEffect(() => {
     const shuffleRecalls = () => {
       const indices = new Set<number>()
-      // Pick 3 random items to be 'recalled'
-      while (indices.size < 3) {
+      while (indices.size < 2) {
         indices.add(Math.floor(Math.random() * PRODUCTS.length))
       }
       setRecalledIndices(Array.from(indices))
     }
-
-    // Shuffle on mount (page reload)
     shuffleRecalls()
-    
-    // Reshuffle every 30 seconds (which matches the marquee loop animation time)
     const interval = setInterval(shuffleRecalls, 30000)
-    
     return () => clearInterval(interval)
   }, [])
 
+  // One tile = 100px * 8 products = 800px wide
+  const TILE_W = 800
+
   return (
-    <div className="w-full h-48 md:h-64 relative border-b border-slate-200 overflow-hidden opacity-50 flex items-end">
-      <div className="flex w-max animate-marquee">
-        {[1, 2, 3, 4].map((i) => (
-          <svg key={i} className="w-[1000px] h-48 md:h-64 shrink-0" viewBox="0 0 1000 200" preserveAspectRatio="xMinYMax meet" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Solid Shelf/Conveyor line */}
-            <path d="M0 180H1000" stroke="#cbd5e1" strokeWidth="1.5" />
+    <div className="w-full relative overflow-hidden" style={{ height: '180px' }}>
+
+      {/* Top fade */}
+      <div className="absolute top-0 left-0 right-0 h-16 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to bottom, rgba(255,255,255,1) 0%, transparent 100%)' }} />
+      {/* Left fade */}
+      <div className="absolute top-0 left-0 bottom-0 w-32 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to right, rgba(255,255,255,0.95) 0%, transparent 100%)' }} />
+      {/* Right fade */}
+      <div className="absolute top-0 right-0 bottom-0 w-32 z-10 pointer-events-none"
+        style={{ background: 'linear-gradient(to left, rgba(255,255,255,0.95) 0%, transparent 100%)' }} />
+
+      {/* Scrolling strip */}
+      <div className="flex w-max animate-marquee absolute bottom-0">
+        {[1, 2, 3, 4, 5].map((tile) => (
+          <svg
+            key={tile}
+            width={TILE_W}
+            height="180"
+            viewBox={`0 0 ${TILE_W} 180`}
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="shrink-0"
+          >
+            <defs>
+              {/* Conveyor belt gradient */}
+              <linearGradient id={`belt-${tile}`} x1="0" y1="175" x2={TILE_W} y2="175" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stopColor="#61c554" stopOpacity="0.08" />
+                <stop offset="50%" stopColor="#61c554" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#61c554" stopOpacity="0.08" />
+              </linearGradient>
+              {/* Glow filter for recalled items */}
+              <filter id={`glow-${tile}`} x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="3" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              {/* Safe dot glow */}
+              <filter id={`safe-glow-${tile}`} x="-100%" y="-100%" width="300%" height="300%">
+                <feGaussianBlur stdDeviation="2" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            {/* Conveyor belt surface */}
+            <rect x="0" y="173" width={TILE_W} height="4" rx="2" fill={`url(#belt-${tile})`} />
+            {/* Main shelf line */}
+            <line x1="0" y1="175" x2={TILE_W} y2="175" stroke="#61c554" strokeWidth="1" strokeOpacity="0.25" />
+            {/* Belt tick marks */}
+            {Array.from({ length: 16 }).map((_, t) => (
+              <line
+                key={t}
+                x1={t * 52 + 26}
+                y1="173"
+                x2={t * 52 + 26}
+                y2="177"
+                stroke="#61c554"
+                strokeWidth="1"
+                strokeOpacity="0.15"
+              />
+            ))}
 
             {/* Products */}
             {PRODUCTS.map((prod, idx) => {
               const isRecalled = recalledIndices.includes(idx)
-              // Create a random-ish delay so they don't pulse synchronously
-              const delay = ((idx * 0.3) % 2) + 's'
-              
+              const xOffset = idx * (TILE_W / PRODUCTS.length) + (TILE_W / PRODUCTS.length - prod.width) / 2
+              const delay = `${(idx * 0.4) % 1.8}s`
+
               return (
-                <g key={idx}>
-                  {/* The main product shape */}
-                  {React.cloneElement(prod.path, {
-                    stroke: isRecalled ? '#ef4444' : '#cbd5e1',
-                    strokeWidth: isRecalled ? 2 : 1.5,
+                <g key={idx} transform={`translate(${xOffset}, 0)`}>
+                  {/* Product silhouette */}
+                  {React.cloneElement(prod.viewPath, {
+                    stroke: isRecalled ? '#f87171' : '#94a3b8',
+                    strokeWidth: isRecalled ? 1.5 : 1,
+                    strokeLinecap: 'round' as const,
+                    strokeLinejoin: 'round' as const,
+                    filter: isRecalled ? `url(#glow-${tile})` : undefined,
                     className: isRecalled ? 'animate-pulse' : '',
-                    style: isRecalled ? { animationDelay: delay } : {}
+                    style: isRecalled ? { animationDelay: delay } : {},
                   })}
-                  
-                  {/* The status indicator rect (green = safe, red = recalled) */}
-                  <rect 
-                    x={prod.rect.x} 
-                    y={prod.rect.y} 
-                    width="10" 
-                    height="10" 
-                    fill={isRecalled ? '#ef4444' : 'var(--primary)'}
+
+                  {/* Status indicator dot */}
+                  <circle
+                    cx={prod.dot.cx}
+                    cy={prod.dot.cy}
+                    r="4"
+                    fill={isRecalled ? '#ef4444' : '#61c554'}
+                    filter={`url(#safe-glow-${tile})`}
                     className={isRecalled ? 'animate-pulse' : ''}
                     style={isRecalled ? { animationDelay: delay } : {}}
+                  />
+                  {/* Dot ring */}
+                  <circle
+                    cx={prod.dot.cx}
+                    cy={prod.dot.cy}
+                    r="6"
+                    fill="none"
+                    stroke={isRecalled ? '#ef4444' : '#61c554'}
+                    strokeWidth="0.75"
+                    strokeOpacity="0.35"
                   />
                 </g>
               )

@@ -78,17 +78,17 @@ export default function Home() {
 
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-            <Button asChild className="h-14 px-10 text-lg rounded-full bg-[#61c554] hover:bg-[#4ea843] text-white font-semibold border-none w-full sm:w-auto shadow-[0_8px_30px_rgb(97,197,84,0.3)] transition-all hover:scale-[1.02]">
+            <Button asChild className="h-14 px-10 text-lg rounded-full bg-[#61c554] hover:bg-[#4ea843] text-white font-semibold border-none ring-0 focus-visible:ring-0 w-full sm:w-auto shadow-[0_8px_30px_rgb(97,197,84,0.3)] transition-all hover:scale-[1.02]">
               <Link href="/signup">Start Monitoring Now</Link>
             </Button>
-            <Button asChild variant="outline" className="h-14 px-10 text-lg rounded-full bg-white/80 backdrop-blur-md border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 w-full sm:w-auto hover:scale-[1.02] transition-all">
+            <Button asChild variant="outline" className="h-14 px-10 text-lg rounded-full bg-white/80 backdrop-blur-md border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 ring-0 focus-visible:ring-0 w-full sm:w-auto hover:scale-[1.02] transition-all">
               <Link href="/recalls">Browse Database</Link>
             </Button>
           </div>
         </div>
 
         {/* Abstract Line Art Placeholder (Product & Warehouse Theme - Assembly Line) */}
-        <div className="-mt-8 relative z-20">
+        <div className="mt-4 relative z-20">
           <AnimatedAssemblyLine />
         </div>
       </section>
