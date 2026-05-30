@@ -2,7 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ShieldAlert, Home, Package, AlertTriangle, Settings, CreditCard, LogOut, Upload, ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react'
+import Image from 'next/image'
+import { ShieldAlert, Home, Package, AlertTriangle, Settings, CreditCard, LogOut, Upload, ChevronLeft, ChevronRight } from 'lucide-react'
 import { logout } from '@/app/(auth)/actions'
 
 export function DashboardSidebar() {
@@ -22,12 +23,12 @@ export function DashboardSidebar() {
         {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
       </button>
 
-      <div className={`flex h-16 items-center px-6 mt-4 ${isCollapsed ? 'justify-center px-0' : ''}`}>
-        <Link href="/dashboard" className="flex items-center gap-2 font-bold text-2xl tracking-tight text-slate-900">
+      <div className={`flex h-16 items-center px-6 mt-4 ${isCollapsed ? 'justify-center px-2' : ''}`}>
+        <Link href="/dashboard" className="flex items-center">
           {isCollapsed ? (
-            <ShieldCheck className="h-8 w-8 text-[#6dbf52] fill-[#6dbf52]/20" />
+            <Image src="/logo-recall.png" alt="RecallGuard" width={36} height={36} className="h-9 w-9 object-contain" />
           ) : (
-            <span>RecallGuard</span>
+            <Image src="/logo-recall.png" alt="RecallGuard" width={150} height={36} className="h-9 w-auto object-contain" />
           )}
         </Link>
       </div>

@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { ShieldCheck } from 'lucide-react'
 import { usePathname } from 'next/navigation'
 
 export function Header() {
@@ -15,9 +15,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 transition-colors">
       <div className="container mx-auto flex h-20 items-center px-4 md:px-6 max-w-7xl">
-        <Link href="/" className="flex items-center gap-3 font-black text-2xl tracking-tighter text-[#6dbf52]">
-          <ShieldCheck className="h-8 w-8 text-[#6dbf52] fill-[#6dbf52]/20" />
-          <span>RecallGuard</span>
+        <Link href="/" className="flex items-center">
+          <Image src="/logo-recall.png" alt="RecallGuard" width={160} height={40} className="h-10 w-auto object-contain" priority />
         </Link>
         
         <nav className="ml-auto hidden md:flex gap-8 items-center text-base font-semibold text-slate-600">
