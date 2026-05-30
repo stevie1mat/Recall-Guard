@@ -5,6 +5,7 @@ import {
   BarChart3, Activity, Search, Database, Bell, Lock, Calendar,
   Package, ShoppingBag, Car, Monitor, Smartphone, Coffee, Gamepad2, Briefcase, Headphones, Plug, Printer
 } from 'lucide-react'
+import AnimatedAssemblyLine from '@/components/AnimatedAssemblyLine'
 
 export default function Home() {
   return (
@@ -52,47 +53,7 @@ export default function Home() {
         </div>
 
         {/* Abstract Line Art Placeholder (Product & Warehouse Theme - Assembly Line) */}
-        <div className="w-full h-48 md:h-64 relative border-b border-slate-200 overflow-hidden opacity-50 flex items-end">
-          <div className="flex w-max animate-marquee">
-            {[1, 2, 3, 4].map((i) => (
-              <svg key={i} className="w-[1000px] h-48 md:h-64 shrink-0" viewBox="0 0 1000 200" preserveAspectRatio="xMinYMax meet" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Solid Shelf/Conveyor line (dotted line removed) */}
-                <path d="M0 180H1000" stroke="#cbd5e1" strokeWidth="1.5" />
-
-                {/* Products (Boxes, Bottles, Cans, Tech) */}
-                {/* Box 1 */}
-                <path d="M30 180V130H80V180 M30 145H80" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Bottle */}
-                <path d="M110 180V100C110 90 120 80 120 70V60H130V70C130 80 140 90 140 100V180Z" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Stacked Boxes */}
-                <path d="M170 180V140H230V180 M180 140V110H220V140" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Tin Can */}
-                <path d="M270 180V120H320V180 M270 130H320 M270 170H320" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Monitor / Tech */}
-                <path d="M360 160V110H430V160H360Z M385 180V160 M405 180V160 M370 180H420" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Tall Box */}
-                <path d="M470 180V80H520V180 M480 80L495 100L510 80" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Spray Bottle */}
-                <path d="M560 180V110C560 100 580 90 580 90H560V80H590V90H600V110C600 110 590 130 590 180H560Z" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Large Box with X */}
-                <path d="M630 180V120H710V180 M630 120L710 180 M630 180L710 120" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Small Stack */}
-                <path d="M750 180V150H780V180 M750 150V130H770V150 M780 180V160H800V180" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Jar */}
-                <path d="M840 180V120C840 110 850 100 850 100V90H890V100C890 100 900 110 900 120V180Z M840 110H900" stroke="#cbd5e1" strokeWidth="1.5" />
-                {/* Box 2 */}
-                <path d="M930 180V140H980V180 M930 150H980" stroke="#cbd5e1" strokeWidth="1.5" />
-
-                {/* Green accent blocks (Representing "Safe" or "Monitored" items) */}
-                <rect x="50" y="155" width="10" height="10" fill="var(--primary)" />
-                <rect x="195" y="120" width="10" height="10" fill="var(--primary)" />
-                <rect x="390" y="125" width="10" height="10" fill="var(--primary)" />
-                <rect x="665" y="145" width="10" height="10" fill="var(--primary)" />
-                <rect x="865" y="135" width="10" height="10" fill="var(--primary)" />
-              </svg>
-            ))}
-          </div>
-        </div>
+        <AnimatedAssemblyLine />
       </section>
 
       {/* 2. HOW BUSINESS OWNERS USE IT */}
@@ -155,28 +116,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* 3. BENTO / FEATURES SECTION */}
-      <section className="py-24 px-4 bg-white relative overflow-hidden">
-        {/* Premium ambient UI gradients in top corners */}
-        <div className="absolute top-[-200px] left-[-200px] w-[600px] h-[600px] rounded-[100%] bg-gradient-to-br from-[#c6f6d5]/80 to-transparent blur-[100px] pointer-events-none z-0"></div>
-        <div className="absolute top-[-200px] right-[-200px] w-[600px] h-[600px] rounded-[100%] bg-gradient-to-bl from-[#fde0b5]/80 to-transparent blur-[100px] pointer-events-none z-0"></div>
-        
-        <div className="container mx-auto max-w-7xl relative z-10">
-          
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-6 leading-[1.1]">
-              Powerful automation that makes sense
-            </h2>
-            <p className="text-slate-600 mb-8 text-lg">
-              Stop manually checking government websites. We continuously sync your inventory against official databases and alert you the second a match is found.
-            </p>
-            <Button asChild className="rounded-full bg-slate-900 hover:bg-slate-800 text-white font-medium px-8 h-14 text-lg">
-              <Link href="/signup">See it in action</Link>
-            </Button>
-          </div>
+      {/* WRAPPER FOR SECTIONS 3 & 4 (SHARED GRADIENT) */}
+      <div className="relative overflow-hidden bg-white">
+        {/* Massive shared ambient UI gradient centered across both sections */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] max-w-[100vw] h-[1000px] rounded-[100%] bg-gradient-to-r from-[#c6f6d5]/40 via-[#e2f8dc]/40 to-[#fde0b5]/40 blur-[120px] pointer-events-none z-0"></div>
 
-          <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl mx-auto">
-            {/* Left Column of Bento */}
+        {/* 3. BENTO / FEATURES SECTION */}
+        <section className="pt-24 pb-12 px-4 relative z-10">
+          <div className="container mx-auto max-w-7xl">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
+            <div className="lg:w-1/3">
+              <h2 className="text-4xl md:text-5xl font-medium tracking-tight mb-6 leading-[1.1]">
+                Powerful automation that makes sense
+              </h2>
+              <p className="text-slate-600 mb-8 text-lg">
+                Stop manually checking government websites. We continuously sync your inventory against official databases and alert you the second a match is found.
+              </p>
+              <Button asChild className="rounded-full bg-slate-900 hover:bg-slate-800 text-white font-medium px-8 h-14 text-lg">
+                <Link href="/signup">See it in action</Link>
+              </Button>
+            </div>
+
+            <div className="lg:w-2/3 flex flex-col md:flex-row gap-6 w-full">
+              {/* Left Column of Bento */}
               <div className="flex flex-col gap-6 w-full md:w-1/2">
                 <div className="bg-white rounded-3xl p-8 flex flex-col justify-center h-64 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative overflow-hidden group transition-shadow hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
                   <div className="mb-4">
@@ -236,18 +198,15 @@ export default function Home() {
                     </div>
                   ))}
                 </div>
+              </div>
             </div>
           </div>
         </div>
-      </section>
+        </section>
 
-      {/* 4. WHAT IT IS & WHY BUSINESS OWNERS NEED IT */}
-      <section className="py-24 px-4 bg-white border-t border-slate-100 relative overflow-hidden">
-        {/* Premium ambient UI gradients in bottom corners */}
-        <div className="absolute bottom-[-200px] left-[-200px] w-[600px] h-[600px] rounded-[100%] bg-gradient-to-tr from-[#c6f6d5]/80 to-transparent blur-[100px] pointer-events-none z-0"></div>
-        <div className="absolute bottom-[-200px] right-[-200px] w-[600px] h-[600px] rounded-[100%] bg-gradient-to-tl from-[#fde0b5]/80 to-transparent blur-[100px] pointer-events-none z-0"></div>
-
-        <div className="container mx-auto max-w-7xl relative z-10">
+        {/* 4. WHAT IT IS & WHY BUSINESS OWNERS NEED IT */}
+        <section className="pt-12 pb-24 px-4 relative z-10">
+          <div className="container mx-auto max-w-7xl">
           <div className="flex flex-col lg:flex-row gap-16">
             
             <div className="lg:w-2/3 grid sm:grid-cols-2 gap-6 order-2 lg:order-1">
@@ -282,11 +241,59 @@ export default function Home() {
             </div>
             
           </div>
+          </div>
+        </section>
+      </div>
+      {/* 4.5. THE RECALLGUARD ADVANTAGE */}
+      <section className="py-24 px-4 bg-white border-t border-slate-100 relative">
+        <div className="container mx-auto max-w-7xl">
+          <div className="mb-16">
+            <h2 className="text-4xl md:text-5xl font-medium tracking-tight max-w-2xl leading-[1.1]">
+              Your automated recall management advantage
+            </h2>
+          </div>
+
+          <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 items-start">
+            {/* Grid of cards */}
+            <div className="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                { title: 'Instant alerts', desc: 'Get notified immediately when a matching recall is published.', icon: Bell },
+                { title: '24/7 Monitoring', desc: 'Our system scans government databases around the clock.', icon: Activity },
+                { title: 'Data accuracy', desc: 'We cross-reference exact SKUs and UPCs to prevent false alarms.', icon: Database },
+                { title: 'Compliance ready', desc: 'Automatically maintain logs of your recall checks for audits.', icon: CheckCircle },
+                { title: 'Team workflow', desc: 'Assign tasks and track removal of products from your shelves.', icon: Briefcase },
+                { title: 'Stress-free ops', desc: 'We handle the complexities so you can focus on your business.', icon: ShieldCheck },
+              ].map((item, i) => (
+                <div key={i} className="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col hover:border-slate-200 transition-colors">
+                  <div className="mb-6">
+                    <div className="h-10 w-10 bg-white rounded-lg border border-slate-200 flex items-center justify-center shadow-sm relative">
+                      <div className="absolute -top-1 -right-1 h-3 w-3 bg-[#61c554] rounded-full border-2 border-white"></div>
+                      <item.icon className="h-5 w-5 text-slate-700" strokeWidth={1.5} />
+                    </div>
+                  </div>
+                  <h3 className="font-semibold text-lg text-slate-900 mb-2">{item.title}</h3>
+                  <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* Right side text and button */}
+            <div className="w-full lg:w-1/3 flex flex-col pt-4">
+              <p className="text-slate-600 text-lg leading-relaxed mb-12">
+                From initial inventory upload to real-time government database synchronization, we simplify the recall monitoring process so you can focus on running your business safely and compliantly.
+              </p>
+              <div>
+                <Button asChild className="rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-medium px-8 h-14 border-0 text-base">
+                  <Link href="/features">Find the best for you</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* 5. LIVE EXAMPLES OF RECALLS */}
-      <section className="py-24 px-4 bg-slate-50 border-t border-slate-100">
+      <section className="py-24 px-4 bg-white border-t border-slate-100">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center max-w-2xl mx-auto mb-16">
             <h2 className="text-4xl font-medium tracking-tight mb-4">Examples of recalls we catch</h2>
@@ -331,13 +338,69 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-20 px-4 bg-white text-center">
-        <h2 className="text-4xl font-medium tracking-tight mb-8">Trusted by retailers,<br />proven by results</h2>
-        <div className="max-w-4xl mx-auto h-64 bg-slate-100 rounded-t-3xl border border-slate-200 border-b-0 overflow-hidden relative">
-          <div className="absolute inset-0 flex items-center justify-center opacity-50">
-            <Lock className="h-16 w-16 text-slate-300" />
+      {/* 6. CTA / SEMI-FOOTER */}
+      <section className="py-32 px-4 relative overflow-hidden flex flex-col items-center justify-center text-center">
+        {/* Massive ambient UI gradient orb centered */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] rounded-[100%] bg-gradient-to-r from-[#fde0b5]/50 via-[#c6f6d5]/80 to-[#e2f8dc]/50 blur-[100px] pointer-events-none z-0"></div>
+        
+        <div className="relative z-10 max-w-3xl mx-auto">
+          <h2 className="text-5xl md:text-6xl font-medium tracking-tight text-slate-900 mb-8 leading-[1.1]">
+            Automate your recall management with confidence
+          </h2>
+          <Button asChild className="rounded-xl bg-[#61c554] hover:bg-[#4ea843] text-white font-medium px-8 h-14 text-lg border-0">
+            <Link href="/signup">Get Started</Link>
+          </Button>
+        </div>
+      </section>
+
+      {/* 7. BLACK FOOTER */}
+      <footer className="bg-black text-white pt-24 pb-8 px-8 md:px-16 relative overflow-hidden">
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-32">
+            
+            <div className="md:col-span-5">
+              <p className="text-slate-400 mb-8 text-sm leading-relaxed max-w-xs">
+                Stay connected, automate recalls, and protect your business. Your compliance success starts here.
+              </p>
+              <div className="flex items-center gap-6 text-slate-400">
+                {/* Social Icons */}
+                <a href="#" className="hover:text-white transition-colors"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+                <a href="#" className="hover:text-white transition-colors"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                <a href="#" className="hover:text-white transition-colors"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg></a>
+                <a href="#" className="hover:text-white transition-colors"><svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+              </div>
+            </div>
+
+            <div className="md:col-span-3">
+              <ul className="space-y-5 text-[13px] font-medium text-slate-300">
+                <li><Link href="/" className="hover:text-white transition-colors">Home</Link></li>
+                <li><Link href="/services" className="hover:text-white transition-colors">Services</Link></li>
+                <li><Link href="/pricing" className="hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="/features" className="hover:text-white transition-colors">Features</Link></li>
+              </ul>
+            </div>
+
+            <div className="md:col-span-4">
+              <ul className="space-y-5 text-[13px] font-medium text-slate-300">
+                <li><Link href="/about" className="hover:text-white transition-colors">About</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition-colors">Contact</Link></li>
+                <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition-colors">Terms & Conditions</Link></li>
+              </ul>
+            </div>
+            
           </div>
+
+          <div className="text-center text-xs text-slate-500 font-medium pb-8 relative z-10">
+            All Rights Reserved 2024 | RecallGuard
+          </div>
+        </div>
+        
+        {/* Massive watermark logo at bottom */}
+        <div className="absolute bottom-[-15%] left-1/2 -translate-x-1/2 w-[120%] text-center pointer-events-none z-0 overflow-hidden flex justify-center opacity-[0.03]">
+          <span className="text-[22vw] font-black italic tracking-tighter whitespace-nowrap leading-none">
+            RecallGuard
+          </span>
         </div>
       </footer>
     </div>
