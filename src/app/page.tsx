@@ -63,11 +63,11 @@ export default function Home() {
           {/* Headline */}
           <h1 className="text-[3.25rem] md:text-[5rem] leading-[1.05] font-bold tracking-tighter mb-6">
             <span className="bg-clip-text text-transparent bg-gradient-to-b from-slate-900 via-slate-800 to-slate-600 pr-2">
-              Stay ahead of
+              Stay ahead of every
             </span>
             <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 pr-2">
-              every recall.
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#0f5132] via-[#61c554] to-[#b5f542]">
+              recall.
             </span>
           </h1>
 
@@ -115,8 +115,24 @@ export default function Home() {
           <div className="grid md:grid-cols-2 gap-6 mb-16">
             {/* Business card */}
             <div className="rounded-3xl p-8 border border-[#61c554]/20 bg-gradient-to-br from-[#f0fbee] to-white shadow-[0_8px_30px_rgb(97,197,84,0.06)]">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-6" style={{ background: 'rgba(97,197,84,0.12)', color: '#3a8c31' }}>
-                <Briefcase className="h-3.5 w-3.5" /> For Businesses
+              <div className="inline-flex items-center gap-2.5 px-1.5 py-1.5 pr-4 rounded-full mb-6 cursor-default"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.6) 100%)',
+                  border: '1px solid rgba(97, 197, 84, 0.35)',
+                  boxShadow: '0 0 0 1px rgba(97,197,84,0.08), 0 4px 24px rgba(97,197,84,0.10), inset 0 1px 0 rgba(255,255,255,0.9)',
+                  backdropFilter: 'blur(16px)',
+                }}
+              >
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase"
+                  style={{ background: 'linear-gradient(135deg, #61c554, #4ea843)', color: 'white', boxShadow: '0 2px 8px rgba(97,197,84,0.4)' }}
+                >
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                  </span>
+                  Business
+                </span>
+                <span className="text-xs font-semibold text-slate-700">For Businesses</span>
               </div>
               <h3 className="text-2xl font-semibold text-slate-900 mb-3">Retailers, distributors &amp; e-commerce stores</h3>
               <p className="text-slate-500 text-sm leading-relaxed mb-6">Upload your full product catalog and get automatic, real-time alerts matched against your exact SKUs and UPCs. Stay compliant, avoid liability, and protect your customers — all on autopilot.</p>
@@ -129,8 +145,24 @@ export default function Home() {
 
             {/* Individual card */}
             <div className="rounded-3xl p-8 border border-slate-100 bg-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold tracking-widest uppercase mb-6" style={{ background: 'rgba(100,116,139,0.1)', color: '#475569' }}>
-                <ShieldCheck className="h-3.5 w-3.5" /> For Individuals
+              <div className="inline-flex items-center gap-2.5 px-1.5 py-1.5 pr-4 rounded-full mb-6 cursor-default"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0.6) 100%)',
+                  border: '1px solid rgba(100,116,139,0.25)',
+                  boxShadow: '0 0 0 1px rgba(100,116,139,0.06), 0 4px 24px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.9)',
+                  backdropFilter: 'blur(16px)',
+                }}
+              >
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase"
+                  style={{ background: 'linear-gradient(135deg, #64748b, #475569)', color: 'white', boxShadow: '0 2px 8px rgba(71,85,105,0.3)' }}
+                >
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-white"></span>
+                  </span>
+                  Personal
+                </span>
+                <span className="text-xs font-semibold text-slate-700">For Individuals</span>
               </div>
               <h3 className="text-2xl font-semibold text-slate-900 mb-3">Parents, shoppers &amp; safety-conscious consumers</h3>
               <p className="text-slate-500 text-sm leading-relaxed mb-6">Subscribe to alerts for specific products, brands, or categories you care about. Get notified the moment Health Canada or CPSC issues a recall on anything in your watchlist — no searching required.</p>
