@@ -8,10 +8,12 @@ export const metadata = {
   title: 'Log in - RecallGuard Canada',
 }
 
-export default async function LoginPage(props: { searchParams: Promise<{ error?: string, message?: string }> }) {
+export default async function LoginPage(props: { searchParams: Promise<{ error?: string, message?: string, next?: string }> }) {
   const searchParams = await props.searchParams;
   const error = searchParams.error
   const message = searchParams.message
+  const next = searchParams.next
+  const signupHref = '/signup'
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-white relative overflow-hidden py-12 px-4 sm:px-6 lg:px-8">
@@ -20,15 +22,12 @@ export default async function LoginPage(props: { searchParams: Promise<{ error?:
 
       <div className="w-full max-w-md space-y-8 bg-white/80 backdrop-blur-xl p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-slate-100 relative z-10">
         <div className="flex flex-col items-center">
-          <Link href="/" className="font-bold text-3xl tracking-tight text-slate-900 mb-2">
-            RecallGuard
-          </Link>
           <h2 className="text-center text-2xl font-semibold tracking-tight text-slate-900">
             Log in to your account
           </h2>
           <p className="mt-2 text-center text-sm text-slate-500">
             Or{' '}
-            <Link href="/signup" className="font-medium text-slate-900 hover:text-slate-700 underline underline-offset-4">
+            <Link href={signupHref} className="font-medium text-slate-900 hover:text-slate-700 underline underline-offset-4">
               start your free trial
             </Link>
           </p>
@@ -47,6 +46,7 @@ export default async function LoginPage(props: { searchParams: Promise<{ error?:
         )}
 
         <form className="mt-8 space-y-6" action={login}>
+          <input type="hidden" name="next" value={next || ''} />
           <div className="space-y-5 rounded-md">
             <div className="space-y-2">
               <Label htmlFor="email" className="text-slate-700 font-medium">Email address</Label>

@@ -3,11 +3,16 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ShieldAlert, Home, Package, AlertTriangle, Settings, CreditCard, LogOut, Upload, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ShieldAlert, Home, Package, AlertTriangle, Settings, CreditCard, LogOut, Upload, ChevronLeft, ChevronRight, Search, Bell } from 'lucide-react'
 import { logout } from '@/app/(auth)/actions'
 
-export function DashboardSidebar() {
+type DashboardSidebarProps = {
+  accountType?: 'business' | 'individual'
+}
+
+export function DashboardSidebar({ accountType = 'business' }: DashboardSidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const isIndividual = accountType === 'individual'
 
   return (
     <div 
@@ -45,60 +50,89 @@ export function DashboardSidebar() {
             <Home className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
             {!isCollapsed && <span>Dashboard</span>}
           </Link>
-          <Link 
-            href="/dashboard/products" 
-            className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
-              isCollapsed ? 'justify-center' : ''
-            }`}
-            title={isCollapsed ? "Products" : undefined}
-          >
-            <Package className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
-            {!isCollapsed && <span>Products</span>}
-          </Link>
-          <Link 
-            href="/dashboard/products/upload" 
-            className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
-              isCollapsed ? 'justify-center' : ''
-            }`}
-            title={isCollapsed ? "CSV Upload" : undefined}
-          >
-            <Upload className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
-            {!isCollapsed && <span>CSV Upload</span>}
-          </Link>
-          <Link 
-            href="/dashboard/matches" 
-            className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
-              isCollapsed ? 'justify-center' : ''
-            }`}
-            title={isCollapsed ? "Matches" : undefined}
-          >
-            <AlertTriangle className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
-            {!isCollapsed && <span>Matches</span>}
-          </Link>
-          <Link 
-            href="/dashboard/alerts" 
-            className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
-              isCollapsed ? 'justify-center' : ''
-            }`}
-            title={isCollapsed ? "Alerts" : undefined}
-          >
-            <ShieldAlert className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
-            {!isCollapsed && <span>Alerts</span>}
-          </Link>
+          {isIndividual ? (
+            <>
+              <Link 
+                href="/recalls" 
+                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                  isCollapsed ? 'justify-center' : ''
+                }`}
+                title={isCollapsed ? "Browse Recalls" : undefined}
+              >
+                <Search className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                {!isCollapsed && <span>Browse Recalls</span>}
+              </Link>
+              <Link 
+                href="/recalls" 
+                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                  isCollapsed ? 'justify-center' : ''
+                }`}
+                title={isCollapsed ? "Saved Alerts" : undefined}
+              >
+                <Bell className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                {!isCollapsed && <span>Saved Alerts</span>}
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link 
+                href="/dashboard/products" 
+                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                  isCollapsed ? 'justify-center' : ''
+                }`}
+                title={isCollapsed ? "Products" : undefined}
+              >
+                <Package className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                {!isCollapsed && <span>Products</span>}
+              </Link>
+              <Link 
+                href="/dashboard/products/upload" 
+                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                  isCollapsed ? 'justify-center' : ''
+                }`}
+                title={isCollapsed ? "CSV Upload" : undefined}
+              >
+                <Upload className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                {!isCollapsed && <span>CSV Upload</span>}
+              </Link>
+              <Link 
+                href="/dashboard/matches" 
+                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                  isCollapsed ? 'justify-center' : ''
+                }`}
+                title={isCollapsed ? "Matches" : undefined}
+              >
+                <AlertTriangle className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                {!isCollapsed && <span>Matches</span>}
+              </Link>
+              <Link 
+                href="/dashboard/alerts" 
+                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                  isCollapsed ? 'justify-center' : ''
+                }`}
+                title={isCollapsed ? "Alerts" : undefined}
+              >
+                <ShieldAlert className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                {!isCollapsed && <span>Alerts</span>}
+              </Link>
+            </>
+          )}
         </nav>
         
         <div className="p-4 mb-4">
           <nav className="space-y-2">
-            <Link 
-              href="/dashboard/billing" 
-              className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
-                isCollapsed ? 'justify-center' : ''
-              }`}
-              title={isCollapsed ? "Billing" : undefined}
-            >
-              <CreditCard className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
-              {!isCollapsed && <span>Billing</span>}
-            </Link>
+            {!isIndividual && (
+              <Link 
+                href="/dashboard/billing" 
+                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                  isCollapsed ? 'justify-center' : ''
+                }`}
+                title={isCollapsed ? "Billing" : undefined}
+              >
+                <CreditCard className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                {!isCollapsed && <span>Billing</span>}
+              </Link>
+            )}
             <Link 
               href="/dashboard/settings" 
               className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${

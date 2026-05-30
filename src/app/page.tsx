@@ -79,10 +79,10 @@ export default function Home() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <Button asChild className="h-14 px-10 text-lg rounded-full bg-[#61c554] hover:bg-[#4ea843] text-white font-semibold border-none ring-0 focus-visible:ring-0 w-full sm:w-auto shadow-[0_8px_30px_rgb(97,197,84,0.3)] transition-all hover:scale-[1.02]">
-              <Link href="/signup">Start Monitoring Now</Link>
+              <Link href="/signup?audience=business">Join as a Business</Link>
             </Button>
             <Button asChild variant="outline" className="h-14 px-10 text-lg rounded-full bg-white/80 backdrop-blur-md border-slate-200 text-slate-700 font-semibold hover:bg-slate-50 ring-0 focus-visible:ring-0 w-full sm:w-auto hover:scale-[1.02] transition-all">
-              <Link href="/recalls">Browse Database</Link>
+              <Link href="/signup?audience=individual">Join as an Individual</Link>
             </Button>
           </div>
         </div>
@@ -100,6 +100,26 @@ export default function Home() {
         <div className="absolute bottom-[-200px] right-[-200px] w-[600px] h-[600px] rounded-[100%] bg-gradient-to-tl from-[#fde0b5]/80 to-transparent blur-[100px] pointer-events-none z-0"></div>
 
         <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="mb-16 border-b border-slate-100 pb-8">
+            <div className="flex flex-wrap justify-between items-center gap-8 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-slate-200">
+              <div className="flex items-center gap-3 w-full md:w-auto pt-4 md:pt-0 md:px-8">
+                <div className="text-4xl font-medium tracking-tight">500+</div>
+                <div className="text-xs text-slate-500 font-semibold tracking-wide leading-tight uppercase">Trusted<br />Retailers</div>
+              </div>
+              <div className="flex items-center gap-3 w-full md:w-auto pt-4 md:pt-0 md:px-8">
+                <div className="text-4xl font-medium tracking-tight">10K+</div>
+                <div className="text-xs text-slate-500 font-semibold tracking-wide leading-tight uppercase">Products<br />Monitored</div>
+              </div>
+              <div className="flex items-center gap-3 w-full md:w-auto pt-4 md:pt-0 md:px-8">
+                <div className="text-4xl font-medium tracking-tight">30K+</div>
+                <div className="text-xs text-slate-500 font-semibold tracking-wide leading-tight uppercase">Database<br />Records</div>
+              </div>
+              <div className="flex items-center gap-3 w-full md:w-auto pt-4 md:pt-0 md:px-8">
+                <div className="text-4xl font-medium tracking-tight">100%</div>
+                <div className="text-xs text-slate-500 font-semibold tracking-wide leading-tight uppercase">Automated<br />Sync</div>
+              </div>
+            </div>
+          </div>
 
           {/* Dual audience toggle header */}
           <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
@@ -196,30 +216,6 @@ export default function Home() {
                 <p className="text-slate-500 text-sm leading-relaxed">{s.desc}</p>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 3. STATS BAR */}
-      <section className="py-16 border-b border-slate-100">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="flex flex-wrap justify-between items-center gap-8 md:gap-4 divide-y md:divide-y-0 md:divide-x divide-slate-200">
-            <div className="flex items-center gap-3 w-full md:w-auto pt-4 md:pt-0 md:px-8">
-              <div className="text-4xl font-medium tracking-tight">500+</div>
-              <div className="text-xs text-slate-500 font-semibold tracking-wide leading-tight uppercase">Trusted<br />Retailers</div>
-            </div>
-            <div className="flex items-center gap-3 w-full md:w-auto pt-4 md:pt-0 md:px-8">
-              <div className="text-4xl font-medium tracking-tight">10K+</div>
-              <div className="text-xs text-slate-500 font-semibold tracking-wide leading-tight uppercase">Products<br />Monitored</div>
-            </div>
-            <div className="flex items-center gap-3 w-full md:w-auto pt-4 md:pt-0 md:px-8">
-              <div className="text-4xl font-medium tracking-tight">30K+</div>
-              <div className="text-xs text-slate-500 font-semibold tracking-wide leading-tight uppercase">Database<br />Records</div>
-            </div>
-            <div className="flex items-center gap-3 w-full md:w-auto pt-4 md:pt-0 md:px-8">
-              <div className="text-4xl font-medium tracking-tight">100%</div>
-              <div className="text-xs text-slate-500 font-semibold tracking-wide leading-tight uppercase">Automated<br />Sync</div>
-            </div>
           </div>
         </div>
       </section>
@@ -374,15 +370,14 @@ export default function Home() {
                 { title: 'Team workflow', desc: 'Assign tasks and track removal of products from your shelves.', icon: Briefcase },
                 { title: 'Stress-free ops', desc: 'We handle the complexities so you can focus on your business.', icon: ShieldCheck },
               ].map((item, i) => (
-                <div key={i} className="bg-slate-50 rounded-2xl p-6 border border-slate-100 flex flex-col hover:border-slate-200 transition-colors">
-                  <div className="mb-6">
-                    <div className="h-10 w-10 bg-white rounded-lg border border-slate-200 flex items-center justify-center shadow-sm relative">
-                      <div className="absolute -top-1 -right-1 h-3 w-3 bg-[#61c554] rounded-full border-2 border-white"></div>
-                      <item.icon className="h-5 w-5 text-slate-700" strokeWidth={1.5} />
-                    </div>
+                <div key={i} className="bg-white rounded-3xl p-8 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex flex-col justify-between transition-all hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] group">
+                  <div className="mb-auto">
+                    <item.icon className="h-7 w-7 text-slate-900 mb-4 transition-transform group-hover:scale-110" strokeWidth={1.5} />
                   </div>
-                  <h3 className="font-semibold text-lg text-slate-900 mb-2">{item.title}</h3>
-                  <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-900 mb-2">{item.title}</h3>
+                    <p className="text-sm text-slate-500 leading-relaxed">{item.desc}</p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -462,11 +457,11 @@ export default function Home() {
             Whether you're protecting a business or just your family — set up your free account in under two minutes.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild className="rounded-full bg-[#61c554] hover:bg-[#4ea843] text-white font-semibold px-10 h-14 text-lg border-0 shadow-[0_8px_30px_rgb(97,197,84,0.3)] hover:scale-[1.02] transition-all">
-              <Link href="/signup">Get Started Free</Link>
+            <Button asChild className="rounded-full bg-[#61c554] hover:bg-[#4ea843] text-white font-semibold px-10 h-14 border-0 shadow-[0_8px_30px_rgb(97,197,84,0.3)] hover:scale-[1.02] transition-all">
+              <Link href="/signup?audience=business">Join as a Business</Link>
             </Button>
-            <Button asChild variant="outline" className="rounded-full px-10 h-14 text-lg border-slate-200 font-semibold hover:bg-slate-50 hover:scale-[1.02] transition-all">
-              <Link href="/recalls">Browse Recall Database</Link>
+            <Button asChild variant="outline" className="rounded-full px-10 h-14 border-slate-200 font-semibold hover:bg-slate-50 hover:scale-[1.02] transition-all">
+              <Link href="/signup?audience=individual">Join as an Individual</Link>
             </Button>
           </div>
         </div>

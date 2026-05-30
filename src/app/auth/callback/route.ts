@@ -4,15 +4,14 @@ import { createClient } from '@/lib/supabase/server'
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  
-  // The type of flow: 'recovery' for password reset, or undefined for normal email verification
-  const next = searchParams.get('next') ?? '/dashboard'
+  const defaultNext = '/login?message=Email confirmed! You can log in now.'
 
   if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     
     if (!error) {
+      const next = searchParams.get('next') ?? defaultNext
       const forwardedHost = request.headers.get('x-forwarded-host') 
       const isLocalEnv = process.env.NODE_ENV === 'development'
       

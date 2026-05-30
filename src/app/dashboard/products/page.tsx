@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Plus, Upload, Package } from 'lucide-react'
 import Link from 'next/link'
 import { format } from 'date-fns'
+import { redirect } from 'next/navigation'
 
 export const metadata = {
   title: 'My Products - RecallGuard Canada',
@@ -14,6 +15,10 @@ export default async function ProductsPage() {
   
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
+
+  if (user.user_metadata?.account_type === 'individual') {
+    redirect('/dashboard')
+  }
 
   // Fetch business profile
   const { data: business } = await supabase
