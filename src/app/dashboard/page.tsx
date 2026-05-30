@@ -1,7 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Package, AlertTriangle, CheckCircle, Activity, ArrowRight } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import { Package, AlertTriangle, CheckCircle, Activity, ArrowRight, ShieldAlert, Upload } from 'lucide-react'
 import Link from 'next/link'
 import { format } from 'date-fns'
 
@@ -59,53 +60,65 @@ export default async function DashboardPage() {
     .limit(5)
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900">Dashboard</h1>
-        <p className="text-slate-500 mt-1">Overview of your watched products and active recall alerts.</p>
+        <h1 className="text-3xl font-semibold tracking-tight text-slate-900">Dashboard</h1>
+        <p className="text-slate-500 mt-2">Overview of your watched products and active recall alerts.</p>
       </div>
 
       {/* Quick Stats */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card className="border-slate-200 shadow-sm">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <Card className="rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-slate-100 bg-white/80 backdrop-blur-xl">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-slate-600">Watched Products</CardTitle>
-            <Package className="h-4 w-4 text-slate-400" />
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm">
+              <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-[#61c554] rounded-full border-2 border-white"></div>
+              <Package className="h-4 w-4 text-slate-600" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-slate-900">{totalProducts || 0}</div>
+            <div className="text-3xl font-bold tracking-tight text-slate-900">{totalProducts || 0}</div>
           </CardContent>
         </Card>
         
-        <Card className="border-slate-200 shadow-sm border-l-4 border-l-blue-500">
+        <Card className="rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-slate-100 bg-white/80 backdrop-blur-xl">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-slate-600">New Matches</CardTitle>
-            <Activity className="h-4 w-4 text-blue-500" />
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm">
+              <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-blue-500 rounded-full border-2 border-white"></div>
+              <Activity className="h-4 w-4 text-slate-600" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-slate-900">{newMatches || 0}</div>
+            <div className="text-3xl font-bold tracking-tight text-slate-900">{newMatches || 0}</div>
             <p className="text-xs text-slate-500 mt-1">Requires review</p>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200 shadow-sm border-l-4 border-l-red-500">
+        <Card className="rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-slate-100 bg-white/80 backdrop-blur-xl">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium text-slate-600">Confirmed Matches</CardTitle>
-            <AlertTriangle className="h-4 w-4 text-red-500" />
+            <CardTitle className="text-sm font-medium text-slate-600">Confirmed</CardTitle>
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm">
+              <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white"></div>
+              <AlertTriangle className="h-4 w-4 text-slate-600" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-slate-900">{confirmedMatches || 0}</div>
+            <div className="text-3xl font-bold tracking-tight text-slate-900">{confirmedMatches || 0}</div>
             <p className="text-xs text-slate-500 mt-1">Action required</p>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200 shadow-sm border-l-4 border-l-green-500">
+        <Card className="rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-slate-100 bg-white/80 backdrop-blur-xl">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium text-slate-600">Resolved</CardTitle>
-            <CheckCircle className="h-4 w-4 text-green-500" />
+            <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm">
+              <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-green-500 rounded-full border-2 border-white"></div>
+              <CheckCircle className="h-4 w-4 text-slate-600" />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-slate-900">0</div>
+            <div className="text-3xl font-bold tracking-tight text-slate-900">0</div>
             <p className="text-xs text-slate-500 mt-1">Issues mitigated</p>
           </CardContent>
         </Card>
@@ -113,44 +126,44 @@ export default async function DashboardPage() {
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-7">
         {/* Recent Matches */}
-        <Card className="col-span-4 border-slate-200 shadow-sm">
+        <Card className="col-span-4 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-slate-100 bg-white/80 backdrop-blur-xl">
           <CardHeader>
-            <CardTitle>Recent Match Activity</CardTitle>
+            <CardTitle className="font-semibold text-lg">Recent Match Activity</CardTitle>
           </CardHeader>
           <CardContent>
             {!recentMatches || recentMatches.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-48 text-center bg-slate-50 rounded-lg border border-dashed border-slate-300">
-                <ShieldAlert className="h-8 w-8 text-slate-300 mb-2" />
-                <p className="text-sm text-slate-500">No match activity yet.</p>
+              <div className="flex flex-col items-center justify-center h-56 text-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+                <ShieldAlert className="h-8 w-8 text-slate-300 mb-3" />
+                <p className="text-sm text-slate-500 font-medium">No match activity yet.</p>
                 {totalProducts === 0 && (
-                  <Link href="/dashboard/products/upload" className="text-sm text-blue-600 mt-2 font-medium">
-                    Upload products to get started
-                  </Link>
+                  <Button asChild variant="link" className="text-sm text-[#61c554] mt-2 font-semibold">
+                    <Link href="/dashboard/products/upload">Upload products to get started</Link>
+                  </Button>
                 )}
               </div>
             ) : (
               <div className="space-y-6">
                 {recentMatches.map((match: any) => (
                   <div key={match.id} className="flex items-start justify-between border-b border-slate-100 last:border-0 pb-4 last:pb-0">
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium leading-none text-slate-900">
+                    <div className="space-y-1.5">
+                      <p className="text-sm font-semibold tracking-tight text-slate-900">
                         {match.products?.name}
                       </p>
                       <p className="text-sm text-slate-500 line-clamp-1">
                         Matched with: {match.recalls?.title}
                       </p>
-                      <div className="flex items-center pt-1 text-xs text-slate-400">
+                      <div className="flex items-center pt-1 text-xs text-slate-400 font-medium">
                         {format(new Date(match.date_found), 'MMM d, h:mm a')}
-                        <span className="mx-2">•</span>
+                        <span className="mx-2 text-slate-200">•</span>
                         Match Score: {match.score}%
                       </div>
                     </div>
-                    <Badge variant="outline" className={`
-                      ${match.status === 'new' ? 'bg-blue-50 text-blue-700 border-blue-200' : ''}
-                      ${match.status === 'reviewing' ? 'bg-yellow-50 text-yellow-700 border-yellow-200' : ''}
-                      ${match.status === 'confirmed' ? 'bg-red-50 text-red-700 border-red-200' : ''}
-                      ${match.status === 'resolved' ? 'bg-green-50 text-green-700 border-green-200' : ''}
-                      ${match.status === 'not_a_match' ? 'bg-slate-100 text-slate-700 border-slate-200' : ''}
+                    <Badge variant="outline" className={`rounded-lg px-2.5 py-0.5 font-medium border-0
+                      ${match.status === 'new' ? 'bg-blue-50 text-blue-700' : ''}
+                      ${match.status === 'reviewing' ? 'bg-yellow-50 text-yellow-700' : ''}
+                      ${match.status === 'confirmed' ? 'bg-red-50 text-red-700' : ''}
+                      ${match.status === 'resolved' ? 'bg-green-50 text-green-700' : ''}
+                      ${match.status === 'not_a_match' ? 'bg-slate-100 text-slate-700' : ''}
                     `}>
                       {match.status.replace('_', ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}
                     </Badge>
@@ -159,9 +172,9 @@ export default async function DashboardPage() {
               </div>
             )}
             {recentMatches && recentMatches.length > 0 && (
-              <div className="mt-4 pt-4 border-t text-center">
-                <Link href="/dashboard/matches" className="text-sm text-blue-600 font-medium flex items-center justify-center hover:underline">
-                  View all matches <ArrowRight className="ml-1 w-4 h-4" />
+              <div className="mt-4 pt-6 border-t border-slate-100 text-center">
+                <Link href="/dashboard/matches" className="text-sm text-[#61c554] font-semibold flex items-center justify-center hover:underline hover:text-[#4ea843]">
+                  View all matches <ArrowRight className="ml-1.5 w-4 h-4" />
                 </Link>
               </div>
             )}
@@ -169,31 +182,33 @@ export default async function DashboardPage() {
         </Card>
 
         {/* Quick Actions / Alerts */}
-        <Card className="col-span-3 border-slate-200 shadow-sm">
+        <Card className="col-span-3 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-slate-100 bg-white/80 backdrop-blur-xl">
           <CardHeader>
-            <CardTitle>Quick Actions</CardTitle>
+            <CardTitle className="font-semibold text-lg">Quick Actions</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Link href="/dashboard/products/upload" className="block w-full text-left p-4 rounded-lg border border-slate-200 hover:border-blue-500 hover:bg-blue-50 transition-colors group">
+            <Link href="/dashboard/products/upload" className="block w-full text-left p-5 rounded-2xl border border-slate-100 bg-white hover:border-[#61c554]/30 hover:shadow-md transition-all group">
               <div className="flex items-center">
-                <div className="bg-blue-100 p-2 rounded-md mr-3 group-hover:bg-blue-200 transition-colors">
-                  <Upload className="h-5 w-5 text-blue-600" />
+                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 shadow-sm mr-4 group-hover:bg-[#61c554]/10 group-hover:border-[#61c554]/20 transition-all">
+                  <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-[#61c554] rounded-full border-2 border-white"></div>
+                  <Upload className="h-5 w-5 text-slate-600 group-hover:text-[#61c554]" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900">Upload CSV</h4>
-                  <p className="text-xs text-slate-500">Add products in bulk</p>
+                  <h4 className="text-sm font-semibold text-slate-900 group-hover:text-[#61c554] transition-colors">Upload CSV</h4>
+                  <p className="text-xs text-slate-500 mt-0.5">Add products in bulk</p>
                 </div>
               </div>
             </Link>
             
-            <Link href="/dashboard/products" className="block w-full text-left p-4 rounded-lg border border-slate-200 hover:border-blue-500 hover:bg-blue-50 transition-colors group">
+            <Link href="/dashboard/products" className="block w-full text-left p-5 rounded-2xl border border-slate-100 bg-white hover:border-[#61c554]/30 hover:shadow-md transition-all group">
               <div className="flex items-center">
-                <div className="bg-slate-100 p-2 rounded-md mr-3 group-hover:bg-blue-200 transition-colors">
-                  <Package className="h-5 w-5 text-slate-600 group-hover:text-blue-600" />
+                <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 shadow-sm mr-4 group-hover:bg-[#61c554]/10 group-hover:border-[#61c554]/20 transition-all">
+                  <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-[#61c554] rounded-full border-2 border-white"></div>
+                  <Package className="h-5 w-5 text-slate-600 group-hover:text-[#61c554]" />
                 </div>
                 <div>
-                  <h4 className="text-sm font-semibold text-slate-900">Manage Inventory</h4>
-                  <p className="text-xs text-slate-500">Edit or manually add products</p>
+                  <h4 className="text-sm font-semibold text-slate-900 group-hover:text-[#61c554] transition-colors">Manage Inventory</h4>
+                  <p className="text-xs text-slate-500 mt-0.5">Edit or manually add products</p>
                 </div>
               </div>
             </Link>

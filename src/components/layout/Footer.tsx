@@ -1,6 +1,15 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 export function Footer() {
+  const pathname = usePathname()
+  
+  if (pathname?.startsWith('/dashboard')) {
+    return null
+  }
+
   return (
     <footer className="bg-black text-white pt-24 pb-8 px-8 md:px-16 relative overflow-hidden mt-auto">
       <div className="container mx-auto max-w-7xl relative z-10">
