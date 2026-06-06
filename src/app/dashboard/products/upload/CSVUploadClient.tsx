@@ -20,7 +20,7 @@ export function CSVUploadClient() {
     setSuccess(null)
     
     try {
-      const result = await uploadCSV(formData)
+      const result = await uploadCSV(formData) as { success?: boolean; count?: number; error?: string }
       if (result?.error) {
         setError(result.error)
       } else if (result?.success) {
