@@ -185,7 +185,7 @@ export default function Home() {
                 <span className="text-xs font-semibold text-slate-700">For Individuals</span>
               </div>
               <h3 className="text-2xl font-semibold text-slate-900 mb-3">Parents, shoppers &amp; safety-conscious consumers</h3>
-              <p className="text-slate-500 text-sm leading-relaxed mb-6">Subscribe to alerts for specific products, brands, or categories you care about. Get notified the moment Health Canada or CPSC issues a recall on anything in your watchlist — no searching required.</p>
+              <p className="text-slate-500 text-sm leading-relaxed mb-6">Subscribe to alerts for specific products, brands, or categories you care about. Get notified the moment Health Canada issues a recall on anything in your watchlist — no searching required.</p>
               <ul className="space-y-2 text-sm text-slate-600">
                 {['Watch specific products or brands', 'Category alerts (e.g. baby items, food)', 'Instant email & push notifications', 'Browse the full recall database'].map(f => (
                   <li key={f} className="flex items-center gap-2"><CheckCircle className="h-4 w-4 text-slate-400 shrink-0" strokeWidth={2} />{f}</li>
@@ -207,7 +207,7 @@ export default function Home() {
 
             {[
               { step: '1', title: 'Set up your profile', desc: 'Businesses upload their product catalog via CSV or API. Individuals simply choose the products, brands, or categories they want to watch.' },
-              { step: '2', title: 'We scan 24/7', desc: 'Our engine continuously cross-references your watchlist against official government databases like Health Canada and CPSC — around the clock.' },
+              { step: '2', title: 'We scan 24/7', desc: 'Our engine continuously cross-references your watchlist against official government databases like Health Canada, CFIA, and Transport Canada — around the clock.' },
               { step: '3', title: 'Get instant alerts', desc: 'The moment a recall matches anything in your profile, you get notified instantly via email so you can act fast and stay protected.' }
             ].map((s, i) => (
               <div key={i} className="bg-white rounded-3xl p-8 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] relative z-10 transition-shadow hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)]">
@@ -290,7 +290,7 @@ export default function Home() {
                   <div className="flex flex-col gap-3 w-full">
                     {[
                       { name: 'Health Canada API', status: 'Live Syncing', time: 'Just now' },
-                      { name: 'CPSC Database (US)', status: 'Live Syncing', time: '2m ago' },
+                      { name: 'CFIA Recalls', status: 'Live Syncing', time: '2m ago' },
                       { name: 'Transport Canada', status: 'Live Syncing', time: '1hr ago' },
                     ].map((db, i) => (
                       <div key={i} className="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center justify-between transition-colors hover:border-slate-200">
