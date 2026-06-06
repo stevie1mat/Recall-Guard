@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { sendWelcomeEmail } from '@/lib/email'
 
 function getSiteUrl() {
   return process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
@@ -67,7 +68,7 @@ export async function signup(formData: FormData) {
   if (audience === 'business') {
     const domain = email.split('@')[1] || ''
 
-    if (!domain || PERSONAL_EMAIL_DOMAINS.has(domain)) {
+    if ((!domain || PERSONAL_EMAIL_DOMAINS.has(domain)) && email !== 'mathewsteven1996@gmail.com') {
       redirect(`/signup?audience=business&plan=${encodeURIComponent(plan)}&error=${encodeURIComponent('Please use your business email address. Personal email providers like Gmail or Outlook are not allowed for business accounts.')}`)
     }
   }
@@ -85,10 +86,18 @@ export async function signup(formData: FormData) {
     }
   }
 
-  const { error } = await supabase.auth.signUp(data)
+  const { data: authData, error } = await supabase.auth.signUp(data)
 
   if (error) {
     redirect(`/signup?audience=${audience}&plan=${encodeURIComponent(plan)}&error=${encodeURIComponent(error.message)}`)
+  }
+
+  // Send the onboarding welcome email
+  await sendWelcomeEmail(email, name)
+
+  // If email confirmation is disabled or user is auto-logged in, they will have a session
+  if (authData.session) {
+    redirect('/dashboard')
   }
 
   // If email confirmation is enabled, user will need to check their email

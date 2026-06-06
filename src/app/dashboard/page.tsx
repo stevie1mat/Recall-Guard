@@ -13,7 +13,8 @@ export const metadata = {
 export default async function DashboardPage(props: { searchParams: Promise<{ message?: string }> }) {
   const supabase = await createClient()
   const searchParams = await props.searchParams
-  const message = searchParams.message
+  const rawMessage = searchParams.message
+  const message = rawMessage ? rawMessage.replace(' You can log in now.', '').trim() : undefined
   
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
@@ -25,6 +26,45 @@ export default async function DashboardPage(props: { searchParams: Promise<{ mes
       user.user_metadata?.full_name ||
       user.email?.split('@')[0] ||
       'there'
+
+    const { count: trackedProducts } = await supabase
+      .from('user_watchlists')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('item_type', 'product')
+      
+    const { count: trackedCategoriesBrands } = await supabase
+      .from('user_watchlists')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .in('item_type', ['category', 'brand'])
+      
+    const { count: savedChecks } = await supabase
+      .from('user_saved_recalls')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+
+    // Fetch watchlists to find recent matching alerts
+    const { data: watchlists } = await supabase
+      .from('user_watchlists')
+      .select('value')
+      .eq('user_id', user.id)
+
+    const watchValues = watchlists?.map(w => w.value.toLowerCase()) || []
+    let recentAlerts: any[] = []
+    
+    if (watchValues.length > 0) {
+      const { data: recent } = await supabase.from('recalls').select('*').order('date_published', { ascending: false }).limit(50)
+      if (recent) {
+        recentAlerts = recent.filter(r => 
+          watchValues.some(val => 
+            (r.title && r.title.toLowerCase().includes(val)) || 
+            (r.summary && r.summary.toLowerCase().includes(val)) ||
+            (r.category && r.category.toLowerCase().includes(val))
+          )
+        ).slice(0, 5)
+      }
+    }
 
     return (
       <div className="space-y-8">
@@ -50,8 +90,8 @@ export default async function DashboardPage(props: { searchParams: Promise<{ mes
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold tracking-tight text-slate-900">0</div>
-              <p className="text-xs text-slate-500 mt-1">Products and brands you want to watch.</p>
+              <div className="text-3xl font-bold tracking-tight text-slate-900">{trackedProducts || 0}</div>
+              <p className="text-xs text-slate-500 mt-1">Specific items you want to watch.</p>
             </CardContent>
           </Card>
 
@@ -64,8 +104,8 @@ export default async function DashboardPage(props: { searchParams: Promise<{ mes
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold tracking-tight text-slate-900">0</div>
-              <p className="text-xs text-slate-500 mt-1">No personal recall alerts yet.</p>
+              <div className="text-3xl font-bold tracking-tight text-slate-900">{recentAlerts.length}</div>
+              <p className="text-xs text-slate-500 mt-1">Matches found in recent recalls.</p>
             </CardContent>
           </Card>
 
@@ -78,21 +118,21 @@ export default async function DashboardPage(props: { searchParams: Promise<{ mes
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold tracking-tight text-slate-900">0</div>
+              <div className="text-3xl font-bold tracking-tight text-slate-900">{savedChecks || 0}</div>
               <p className="text-xs text-slate-500 mt-1">Keep your safety checks organized.</p>
             </CardContent>
           </Card>
 
           <Card className="rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-slate-100 bg-white/80 backdrop-blur-xl">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Categories Watching</CardTitle>
+              <CardTitle className="text-sm font-medium text-slate-600">Categories & Brands</CardTitle>
               <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-white border border-slate-100 shadow-sm">
                 <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-slate-400 rounded-full border-2 border-white"></div>
                 <Home className="h-4 w-4 text-slate-600" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold tracking-tight text-slate-900">0</div>
+              <div className="text-3xl font-bold tracking-tight text-slate-900">{trackedCategoriesBrands || 0}</div>
               <p className="text-xs text-slate-500 mt-1">Home, baby, electronics, and more.</p>
             </CardContent>
           </Card>
@@ -104,16 +144,43 @@ export default async function DashboardPage(props: { searchParams: Promise<{ mes
               <CardTitle className="font-semibold text-lg">Personal Recall Activity</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex flex-col items-center justify-center h-56 text-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
-                <ShieldAlert className="h-8 w-8 text-slate-300 mb-3" />
-                <p className="text-sm text-slate-500 font-medium">No saved alerts yet.</p>
-                <p className="text-xs text-slate-400 mt-1 max-w-sm">
-                  Start by browsing the recall database and following the products, brands, or categories you care about.
-                </p>
-                <Button asChild variant="link" className="text-sm text-slate-900 mt-2 font-semibold">
-                  <Link href="/recalls">Browse recalls to get started</Link>
-                </Button>
-              </div>
+              {recentAlerts.length === 0 ? (
+                <div className="flex flex-col items-center justify-center h-56 text-center bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+                  <ShieldAlert className="h-8 w-8 text-slate-300 mb-3" />
+                  <p className="text-sm text-slate-500 font-medium">No recent matches found.</p>
+                  <p className="text-xs text-slate-400 mt-1 max-w-sm">
+                    Start by browsing the recall database and following the products, brands, or categories you care about.
+                  </p>
+                  <Button asChild variant="link" className="text-sm text-slate-900 mt-2 font-semibold">
+                    <Link href="/dashboard/watchlist">Manage your watchlist</Link>
+                  </Button>
+                </div>
+              ) : (
+                <div className="space-y-6">
+                  {recentAlerts.map((match: any) => (
+                    <div key={match.id} className="flex items-start justify-between border-b border-slate-100 last:border-0 pb-4 last:pb-0">
+                      <div className="space-y-1.5">
+                        <p className="text-sm font-semibold tracking-tight text-slate-900">
+                          <Link href={`/recalls/${match.id}`} className="hover:text-blue-600 hover:underline">
+                            {match.title}
+                          </Link>
+                        </p>
+                        <p className="text-sm text-slate-500 line-clamp-1">
+                          {match.summary}
+                        </p>
+                        <div className="flex items-center pt-1 text-xs text-slate-400 font-medium">
+                          {match.date_published && format(new Date(match.date_published), 'MMM d, yyyy')}
+                          <span className="mx-2 text-slate-200">•</span>
+                          {match.category}
+                        </div>
+                      </div>
+                      <Badge variant="outline" className="rounded-lg px-2.5 py-0.5 font-medium border-0 bg-red-50 text-red-700">
+                        Match
+                      </Badge>
+                    </div>
+                  ))}
+                </div>
+              )}
             </CardContent>
           </Card>
 
@@ -122,27 +189,27 @@ export default async function DashboardPage(props: { searchParams: Promise<{ mes
               <CardTitle className="font-semibold text-lg">Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Link href="/recalls" className="block w-full text-left p-5 rounded-2xl border border-slate-100 bg-white hover:border-slate-200 hover:shadow-md transition-all group">
+              <Link href="/recalls" className="block w-full text-left p-5 rounded-2xl border border-slate-100 bg-white hover:border-[#61c554]/30 hover:shadow-md transition-all group">
                 <div className="flex items-center">
-                  <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 shadow-sm mr-4 transition-all">
+                  <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 shadow-sm mr-4 group-hover:bg-[#61c554]/10 transition-all">
                     <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-[#61c554] rounded-full border-2 border-white"></div>
-                    <Search className="h-5 w-5 text-slate-600" />
+                    <Search className="h-5 w-5 text-slate-600 group-hover:text-[#61c554]" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-900 transition-colors">Browse Recalls</h4>
+                    <h4 className="text-sm font-semibold text-slate-900 transition-colors group-hover:text-[#61c554]">Browse Recalls</h4>
                     <p className="text-xs text-slate-500 mt-0.5">Search toys, food, electronics, and more</p>
                   </div>
                 </div>
               </Link>
 
-              <Link href="/signup?audience=individual" className="block w-full text-left p-5 rounded-2xl border border-slate-100 bg-white hover:border-slate-200 hover:shadow-md transition-all group">
+              <Link href="/dashboard/watchlist" className="block w-full text-left p-5 rounded-2xl border border-slate-100 bg-white hover:border-[#61c554]/30 hover:shadow-md transition-all group">
                 <div className="flex items-center">
-                  <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 shadow-sm mr-4 transition-all">
+                  <div className="relative flex h-12 w-12 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 shadow-sm mr-4 group-hover:bg-[#61c554]/10 transition-all">
                     <div className="absolute -top-1 -right-1 h-2.5 w-2.5 bg-slate-900 rounded-full border-2 border-white"></div>
-                    <Bookmark className="h-5 w-5 text-slate-600" />
+                    <Bookmark className="h-5 w-5 text-slate-600 group-hover:text-[#61c554]" />
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-slate-900 transition-colors">Manage Watchlist</h4>
+                    <h4 className="text-sm font-semibold text-slate-900 transition-colors group-hover:text-[#61c554]">Manage Watchlist</h4>
                     <p className="text-xs text-slate-500 mt-0.5">Set the products and brands you care about</p>
                   </div>
                 </div>
