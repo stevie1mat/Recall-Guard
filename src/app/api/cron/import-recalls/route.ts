@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { sendRecallAlertEmail } from '@/lib/email'
 
-const GOC_RECALL_URL = 'https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/SCRSAMDonneesOuvertes.json'
+const GOC_RECALL_URL = 'https://recalls-rappels.canada.ca/sites/default/files/opendata-donneesouvertes/HCRSAMOpenData.json'
 
 // Use the service role key for the cron job to bypass RLS
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
@@ -27,35 +27,36 @@ export async function GET(request: Request) {
 
     if (importLog) importLogId = importLog.id
 
-    // 1. Fetch Government of Canada JSON feed
+    // 1. Fetch Government of Canada English JSON feed
     const response = await fetch(GOC_RECALL_URL)
     if (!response.ok) {
       throw new Error(`Failed to fetch recall data: ${response.statusText}`)
     }
     
     const data = await response.json()
-    // The JSON structure from Canada Open Data can vary, but typically it's an array or an object containing an array.
+    // The API returns a top-level array
     const recalls = Array.isArray(data) ? data : (data.results || data.recalls || [])
     
     let importedCount = 0
 
-    // 2 & 3. Parse and Normalize fields
+    // 2 & 3. Parse and Normalize fields using actual GoC Open Data field names
     for (const rawRecall of recalls) {
-      const sourceId = rawRecall.recallId || rawRecall.id?.toString()
+      const sourceId = rawRecall.NID
       if (!sourceId) continue;
       
-      const title = rawRecall.title?.en || rawRecall.title || 'Unknown Title'
-      const summary = rawRecall.summary?.en || rawRecall.description || ''
-      const category = rawRecall.category?.en || rawRecall.category || 'General'
-      const datePublished = rawRecall.date_published ? new Date(rawRecall.date_published * 1000).toISOString() : new Date().toISOString()
-      const officialUrl = rawRecall.url?.en || rawRecall.url || ''
+      const title = (rawRecall.Title || '').trim()
+      const summary = rawRecall.Product || ''
+      const issue = rawRecall.Issue || ''
+      const category = rawRecall.Category || rawRecall.Organization || 'General'
+      const datePublished = rawRecall['Last updated'] ? new Date(rawRecall['Last updated']).toISOString() : new Date().toISOString()
+      const officialUrl = rawRecall.URL || ''
 
       // 4. Upsert recalls into database
       const { data: recall, error: upsertError } = await supabase.from('recalls').upsert({
         source_id: sourceId,
         source: 'Government of Canada',
         title,
-        summary,
+        summary: `${summary}. Issue: ${issue}`,
         category,
         date_published: datePublished,
         official_url: officialUrl,

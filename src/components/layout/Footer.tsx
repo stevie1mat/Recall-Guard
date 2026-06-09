@@ -24,12 +24,12 @@ export function Footer() {
 
       {/* Top CTA strip */}
       <div className="border-b relative z-10" style={{ borderColor: 'rgba(97,197,84,0.15)' }}>
-        <div className="container mx-auto max-w-7xl px-8 py-12 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="container mx-auto max-w-7xl px-4 sm:px-8 py-8 sm:py-12 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
           <div>
             <p className="text-xs font-semibold tracking-widest uppercase mb-2" style={{ color: '#61c554' }}>
               Start protecting your business today
             </p>
-            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white tracking-tight">
               Never miss a recall again.
             </h2>
           </div>
@@ -47,11 +47,11 @@ export function Footer() {
       </div>
 
       {/* Main grid */}
-      <div className="container mx-auto max-w-7xl px-8 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+      <div className="container mx-auto max-w-7xl px-4 sm:px-8 py-10 sm:py-16 relative z-10">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-12 gap-8 sm:gap-12 mb-12 sm:mb-16">
 
           {/* Brand column */}
-          <div className="md:col-span-4">
+          <div className="col-span-2 sm:col-span-2 md:col-span-4">
             <Link href="/" className="inline-flex mb-6">
               <Image
                 src="/logo-recall.png"
@@ -87,7 +87,7 @@ export function Footer() {
           </div>
 
           {/* Product links */}
-          <div className="md:col-span-2">
+          <div className="col-span-1 md:col-span-2">
             <h4 className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: '#61c554' }}>Product</h4>
             <ul className="space-y-4 text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
               {[
@@ -105,7 +105,7 @@ export function Footer() {
           </div>
 
           {/* Company links */}
-          <div className="md:col-span-2">
+          <div className="col-span-1 md:col-span-2">
             <h4 className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: '#61c554' }}>Company</h4>
             <ul className="space-y-4 text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
               {[
@@ -123,7 +123,7 @@ export function Footer() {
           </div>
 
           {/* Resources links */}
-          <div className="md:col-span-2">
+          <div className="col-span-1 md:col-span-2">
             <h4 className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: '#61c554' }}>Resources</h4>
             <ul className="space-y-4 text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
               {[
@@ -141,7 +141,7 @@ export function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div className="md:col-span-2">
+          <div className="col-span-2 sm:col-span-1 md:col-span-2">
             <h4 className="text-xs font-bold tracking-widest uppercase mb-6" style={{ color: '#61c554' }}>Stay updated</h4>
             <p className="text-sm mb-4" style={{ color: 'rgba(255,255,255,0.5)' }}>
               Get recall alerts and product updates delivered to your inbox.
@@ -174,7 +174,7 @@ export function Footer() {
 
         {/* Stats row */}
         <div
-          className="grid grid-cols-2 md:grid-cols-4 gap-6 rounded-2xl p-8 mb-12"
+          className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 rounded-2xl p-5 sm:p-8 mb-8 sm:mb-12"
           style={{ background: 'rgba(97,197,84,0.06)', border: '1px solid rgba(97,197,84,0.12)' }}
         >
           {[
@@ -184,7 +184,7 @@ export function Footer() {
             { value: '< 1 min', label: 'Average alert delivery' },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
-              <div className="text-2xl font-bold mb-1 text-white">{value}</div>
+              <div className="text-xl sm:text-2xl font-bold mb-1 text-white">{value}</div>
               <div className="text-xs" style={{ color: 'rgba(255,255,255,0.45)' }}>{label}</div>
             </div>
           ))}
@@ -192,13 +192,13 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div
-          className="flex flex-col md:flex-row items-center justify-between gap-4 pt-8"
+          className="flex flex-col md:flex-row items-center justify-between gap-4 pt-6 sm:pt-8"
           style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}
         >
           <p className="text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
             © {new Date().getFullYear()} RecallGuard Inc. All rights reserved. Built for Canadian retailers.
           </p>
-          <div className="flex items-center gap-6 text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 sm:gap-6 text-xs" style={{ color: 'rgba(255,255,255,0.35)' }}>
             <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
             <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
             <Link href="/cookies" className="hover:text-white transition-colors">Cookies</Link>
