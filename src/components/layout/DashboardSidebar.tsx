@@ -16,14 +16,19 @@ export function DashboardSidebar({ accountType = 'business' }: DashboardSidebarP
 
   return (
     <div 
-      className={`hidden flex-col border-r border-slate-100 bg-white/60 backdrop-blur-2xl md:flex relative z-10 shadow-[4px_0_24px_rgb(0,0,0,0.02)] transition-all duration-300 ease-in-out ${
-        isCollapsed ? 'w-20' : 'w-64'
+      className={`hidden flex-col md:flex relative z-10 shadow-[8px_0_30px_rgb(0,0,0,0.1)] transition-all duration-300 ease-in-out ${
+        isCollapsed ? 'w-20' : 'w-72'
       }`}
+      style={{ background: 'linear-gradient(160deg, #0d2a14 0%, #102e18 40%, #0a2010 100%)' }}
     >
+      {/* Decorative ambient light */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute -top-24 -left-24 w-64 h-64 rounded-full" style={{ background: 'radial-gradient(circle, rgba(97,197,84,0.15) 0%, transparent 70%)' }}></div>
+      </div>
       {/* Collapse Toggle Button */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3.5 top-20 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-sm hover:text-slate-900 focus:outline-none"
+        className="absolute -right-3.5 top-20 z-20 flex h-7 w-7 items-center justify-center rounded-full border border-white/10 bg-[#0d2a14] text-white/50 shadow-md hover:text-white hover:border-[#61c554]/50 hover:bg-[#102e18] transition-all focus:outline-none"
       >
         {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
       </button>
@@ -42,34 +47,34 @@ export function DashboardSidebar({ accountType = 'business' }: DashboardSidebarP
         <nav className="flex-1 space-y-2 px-4 py-4">
           <Link 
             href="/dashboard" 
-            className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+            className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
               isCollapsed ? 'justify-center' : ''
             }`}
             title={isCollapsed ? "Dashboard" : undefined}
           >
-            <Home className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+            <Home className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
             {!isCollapsed && <span>Dashboard</span>}
           </Link>
           {isIndividual ? (
             <>
               <Link 
                 href="/recalls" 
-                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
                   isCollapsed ? 'justify-center' : ''
                 }`}
                 title={isCollapsed ? "Browse Recalls" : undefined}
               >
-                <Search className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                <Search className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
                 {!isCollapsed && <span>Browse Recalls</span>}
               </Link>
               <Link 
                 href="/recalls" 
-                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
                   isCollapsed ? 'justify-center' : ''
                 }`}
                 title={isCollapsed ? "Saved Alerts" : undefined}
               >
-                <Bell className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                <Bell className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
                 {!isCollapsed && <span>Saved Alerts</span>}
               </Link>
             </>
@@ -77,42 +82,42 @@ export function DashboardSidebar({ accountType = 'business' }: DashboardSidebarP
             <>
               <Link 
                 href="/dashboard/products" 
-                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
                   isCollapsed ? 'justify-center' : ''
                 }`}
                 title={isCollapsed ? "Products" : undefined}
               >
-                <Package className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                <Package className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
                 {!isCollapsed && <span>Products</span>}
               </Link>
               <Link 
                 href="/dashboard/products/upload" 
-                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
                   isCollapsed ? 'justify-center' : ''
                 }`}
                 title={isCollapsed ? "CSV Upload" : undefined}
               >
-                <Upload className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                <Upload className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
                 {!isCollapsed && <span>CSV Upload</span>}
               </Link>
               <Link 
                 href="/dashboard/matches" 
-                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
                   isCollapsed ? 'justify-center' : ''
                 }`}
                 title={isCollapsed ? "Matches" : undefined}
               >
-                <AlertTriangle className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                <AlertTriangle className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
                 {!isCollapsed && <span>Matches</span>}
               </Link>
               <Link 
                 href="/dashboard/alerts" 
-                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
                   isCollapsed ? 'justify-center' : ''
                 }`}
                 title={isCollapsed ? "Alerts" : undefined}
               >
-                <ShieldAlert className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                <ShieldAlert className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
                 {!isCollapsed && <span>Alerts</span>}
               </Link>
             </>
@@ -124,34 +129,34 @@ export function DashboardSidebar({ accountType = 'business' }: DashboardSidebarP
             {!isIndividual && (
               <Link 
                 href="/dashboard/billing" 
-                className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+                className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
                   isCollapsed ? 'justify-center' : ''
                 }`}
                 title={isCollapsed ? "Billing" : undefined}
               >
-                <CreditCard className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                <CreditCard className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
                 {!isCollapsed && <span>Billing</span>}
               </Link>
             )}
             <Link 
               href="/dashboard/settings" 
-              className={`flex items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm hover:text-slate-900 transition-all ${
+              className={`flex items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-white/5 hover:text-white transition-all group relative z-10 ${
                 isCollapsed ? 'justify-center' : ''
               }`}
               title={isCollapsed ? "Settings" : undefined}
             >
-              <Settings className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+              <Settings className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-[#61c554] transition-colors flex-shrink-0`} />
               {!isCollapsed && <span>Settings</span>}
             </Link>
             <form action={logout}>
               <button 
                 type="submit" 
-                className={`flex w-full items-center rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-red-50 hover:text-red-700 text-left transition-all ${
+                className={`flex w-full items-center rounded-2xl px-3 py-3 text-sm font-semibold text-white/60 hover:bg-red-900/30 hover:text-red-400 text-left transition-all group relative z-10 ${
                   isCollapsed ? 'justify-center' : ''
                 }`}
                 title={isCollapsed ? "Log out" : undefined}
               >
-                <LogOut className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-slate-400 flex-shrink-0`} />
+                <LogOut className={`${isCollapsed ? '' : 'mr-3'} h-5 w-5 text-white/40 group-hover:text-red-400 transition-colors flex-shrink-0`} />
                 {!isCollapsed && <span>Log out</span>}
               </button>
             </form>

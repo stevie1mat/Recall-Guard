@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { DashboardSidebar } from '@/components/layout/DashboardSidebar'
+import { MobileDashboardNav } from '@/components/layout/MobileDashboardNav'
 
 export default async function DashboardLayout({
   children,
@@ -41,9 +42,12 @@ export default async function DashboardLayout({
 
       {/* Main Content */}
       <div className="flex flex-1 flex-col overflow-hidden relative z-10">
-        <header className="flex h-[88px] items-center justify-between px-8">
-          <div className="font-semibold text-xl tracking-tight text-slate-900 truncate">
-            {displayName}
+        <header className="flex h-20 sm:h-[88px] items-center justify-between px-4 sm:px-8 border-b border-slate-100 md:border-none">
+          <div className="flex items-center gap-3">
+            <MobileDashboardNav accountType={accountType} />
+            <div className="font-semibold text-lg sm:text-xl tracking-tight text-slate-900 truncate">
+              {displayName}
+            </div>
           </div>
           <div className="flex items-center gap-4">
             {accountType === 'individual' ? (
@@ -57,7 +61,7 @@ export default async function DashboardLayout({
             )}
           </div>
         </header>
-        <main className="flex-1 overflow-y-auto px-8 pb-12 pt-4">
+        <main className="flex-1 overflow-y-auto px-4 sm:px-8 pb-12 pt-4 sm:pt-4">
           <div className="w-full">
             {children}
           </div>
