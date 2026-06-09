@@ -52,33 +52,36 @@ export default async function RecallsPage(
   }
 
   return (
-    <div className="bg-slate-50 min-h-screen py-10">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-          <div>
-            <h1 className="text-3xl font-bold tracking-tight text-slate-900">Canadian Product Recalls</h1>
-            <p className="text-slate-500 mt-1">Search the latest recalls from the Government of Canada.</p>
+    <div className="bg-[#fcfdfc] min-h-screen py-16 relative overflow-hidden">
+      {/* Premium ambient UI gradient */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] rounded-[100%] bg-gradient-to-b from-[#61c554]/10 to-transparent blur-[80px] pointer-events-none z-0"></div>
+      
+      <div className="container mx-auto px-4 md:px-6 relative z-10 max-w-5xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4 text-center md:text-left">
+          <div className="w-full">
+            <h1 className="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-3">Canadian Product Recalls</h1>
+            <p className="text-lg text-slate-500">Search the latest recalls from the Government of Canada.</p>
           </div>
         </div>
 
         {/* Search & Filters */}
-        <Card className="mb-8 border-slate-200 shadow-sm">
-          <CardContent className="p-4 sm:p-6">
+        <Card className="mb-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-slate-100/60 bg-white/70 backdrop-blur-xl">
+          <CardContent className="p-6 sm:p-8">
             <form className="flex flex-col sm:flex-row gap-4" action="/recalls" method="GET">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
+                <Search className="absolute left-4 top-3.5 h-5 w-5 text-slate-400" />
                 <Input 
                   name="q"
                   defaultValue={query}
                   placeholder="Search by keyword, brand, or product name..." 
-                  className="pl-10"
+                  className="pl-12 h-12 rounded-xl border-slate-200 text-base shadow-sm focus-visible:ring-[#61c554]"
                 />
               </div>
               <div className="w-full sm:w-64">
                 <select 
                   name="category" 
                   defaultValue={category}
-                  className="flex h-10 w-full items-center justify-between rounded-md border border-slate-200 bg-white px-3 py-2 text-sm ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-12 w-full items-center justify-between rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm shadow-sm ring-offset-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-[#61c554] focus:ring-offset-2"
                 >
                   <option value="">All Categories</option>
                   <option value="Food">Food</option>
@@ -87,7 +90,7 @@ export default async function RecallsPage(
                   <option value="Health Products">Health Products</option>
                 </select>
               </div>
-              <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+              <Button type="submit" className="h-12 rounded-xl bg-[#61c554] hover:bg-[#4ea843] text-white px-8 text-base shadow-md hover:shadow-lg transition-all border-0">
                 Search
               </Button>
             </form>
@@ -108,15 +111,15 @@ export default async function RecallsPage(
             <p className="text-slate-500 mt-2">Try adjusting your search filters.</p>
           </div>
         ) : (
-          <div className="grid gap-6">
+          <div className="space-y-6">
             {recalls.map((recall) => (
-              <Card key={recall.id} className="border-slate-200 shadow-sm overflow-hidden flex flex-col md:flex-row">
-                <div className="flex-1 p-6">
-                  <div className="flex flex-wrap items-center gap-2 mb-3">
-                    <Badge variant="secondary" className="bg-blue-50 text-blue-700 hover:bg-blue-50">
+              <Card key={recall.id} className="rounded-3xl border-slate-100/60 bg-white/80 backdrop-blur-sm shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden flex flex-col md:flex-row group border-l-4 border-l-transparent hover:border-l-[#61c554]">
+                <div className="flex-1 p-6 sm:p-8">
+                  <div className="flex flex-wrap items-center gap-2.5 mb-4">
+                    <Badge variant="secondary" className="bg-[#61c554]/10 text-[#4ea843] hover:bg-[#61c554]/20 border-0 rounded-lg px-3 py-1 font-medium">
                       {recall.category || 'General'}
                     </Badge>
-                    <Badge variant="outline" className="text-slate-500">
+                    <Badge variant="outline" className="text-slate-500 border-slate-200 rounded-lg px-3 py-1 font-medium bg-white">
                       {recall.source || 'Gov of Canada'}
                     </Badge>
                     {recall.date_published && (
@@ -126,16 +129,16 @@ export default async function RecallsPage(
                       </span>
                     )}
                   </div>
-                  <h3 className="text-xl font-semibold text-slate-900 mb-2">
-                    <Link href={`/recalls/${recall.id}`} className="hover:text-blue-600 hover:underline">
+                  <h3 className="text-2xl font-bold tracking-tight text-slate-900 mb-3 leading-snug">
+                    <Link href={`/recalls/${recall.id}`} className="group-hover:text-[#61c554] transition-colors">
                       {recall.title}
                     </Link>
                   </h3>
-                  <p className="text-slate-600 text-sm line-clamp-3 mb-4">
+                  <p className="text-slate-600 text-base leading-relaxed line-clamp-3 mb-6">
                     {recall.summary || 'No summary available.'}
                   </p>
                   <div className="flex items-center gap-4">
-                    <Button asChild variant="outline" size="sm">
+                    <Button asChild variant="outline" className="rounded-xl border-slate-200 bg-white hover:bg-slate-50 hover:text-[#61c554] transition-colors shadow-sm h-10 px-6">
                       <Link href={`/recalls/${recall.id}`}>View Details</Link>
                     </Button>
                     {recall.official_url && (
@@ -143,9 +146,9 @@ export default async function RecallsPage(
                         href={recall.official_url}  
                         target="_blank" 
                         rel="noopener noreferrer"
-                        className="text-sm text-blue-600 hover:text-blue-800 flex items-center"
+                        className="text-sm font-medium text-slate-500 hover:text-slate-900 flex items-center transition-colors"
                       >
-                        Official Notice <ExternalLink className="h-3 w-3 ml-1" />
+                        Official Notice <ExternalLink className="h-3.5 w-3.5 ml-1.5" />
                       </a>
                     )}
                   </div>

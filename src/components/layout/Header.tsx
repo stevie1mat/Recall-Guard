@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
+import { Logo } from '@/components/ui/Logo'
 import { Button } from '@/components/ui/button'
 import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
@@ -33,8 +34,8 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 transition-colors">
       <div className="container mx-auto flex h-16 sm:h-20 items-center px-4 md:px-6 max-w-7xl">
-        <Link href="/" className="flex items-center shrink-0">
-          <Image src="/logo-recall.png" alt="RecallGuard" width={160} height={40} className="h-8 sm:h-10 w-auto object-contain" priority />
+        <Link href="/" className="flex items-center">
+          <Logo theme="light" />
         </Link>
         
         {/* Desktop nav */}

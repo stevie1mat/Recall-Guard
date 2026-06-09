@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Logo } from '@/components/ui/Logo'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
@@ -52,14 +53,8 @@ export function Footer() {
 
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-2 md:col-span-4">
-            <Link href="/" className="inline-flex mb-6">
-              <Image
-                src="/logo-recall.png"
-                alt="RecallGuard"
-                width={160}
-                height={40}
-                className="h-10 w-auto object-contain"
-              />
+            <Link href="/" className="inline-block">
+              <Logo theme="dark" />
             </Link>
             <p className="text-sm leading-relaxed mb-8 max-w-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
               The automated compliance platform built for Canadian retailers, distributors, and e-commerce stores. We monitor so you don't have to.

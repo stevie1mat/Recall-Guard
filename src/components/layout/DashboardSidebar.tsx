@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ShieldAlert, Home, Package, AlertTriangle, Settings, CreditCard, LogOut, Upload, ChevronLeft, ChevronRight, Search, Bell } from 'lucide-react'
+import { Logo } from '@/components/ui/Logo'
 import { logout } from '@/app/(auth)/actions'
 
 type DashboardSidebarProps = {
@@ -35,11 +36,7 @@ export function DashboardSidebar({ accountType = 'business' }: DashboardSidebarP
 
       <div className={`flex h-16 items-center px-6 mt-4 ${isCollapsed ? 'justify-center px-2' : ''}`}>
         <Link href="/dashboard" className="flex items-center">
-          {isCollapsed ? (
-            <Image src="/logo-recall.png" alt="RecallGuard" width={36} height={36} className="h-9 w-9 object-contain" />
-          ) : (
-            <Image src="/logo-recall.png" alt="RecallGuard" width={150} height={36} className="h-9 w-auto object-contain" />
-          )}
+          <Logo theme="dark" collapsed={isCollapsed} />
         </Link>
       </div>
 

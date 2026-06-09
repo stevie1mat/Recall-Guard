@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { Menu, X, ShieldAlert, Home, Package, AlertTriangle, Settings, CreditCard, LogOut, Upload, Search, Bell } from 'lucide-react'
 import { logout } from '@/app/(auth)/actions'
 import Image from 'next/image'
+import { Logo } from '@/components/ui/Logo'
 
 type MobileDashboardNavProps = {
   accountType?: 'business' | 'individual'
@@ -43,7 +44,7 @@ export function MobileDashboardNav({ accountType = 'business' }: MobileDashboard
         <div className="md:hidden fixed inset-0 z-50 bg-white/98 backdrop-blur-xl flex flex-col">
           <div className="flex items-center justify-between px-6 h-20 border-b border-slate-100">
             <Link href="/dashboard" className="flex items-center" onClick={() => setIsOpen(false)}>
-              <Image src="/logo-recall.png" alt="RecallGuard" width={140} height={32} className="h-8 w-auto object-contain" />
+              <Logo theme="light" />
             </Link>
             <button
               onClick={() => setIsOpen(false)}
